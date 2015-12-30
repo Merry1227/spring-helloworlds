@@ -21,7 +21,7 @@
 	<!--step1:dataSource from connection pool  -->
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
 		 <property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		 <property name="url" value="jdbc:mysql://10.199.86.215:3306/ECGlobalDB"></property>
+		 <property name="url" value="jdbc:mysql://localhost:3306/ECGlobalDB"></property>
 		 <property name="username" value="alert"></property>
 		 <property name="password" value="alert37"></property>
 	</bean>		 
