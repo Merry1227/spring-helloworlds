@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Account1">
+	<select id="selectOne" resultType="cmei.sql.dao.Account">
+		SELECT * FROM nsproduct_inventory WHERE nsproduct=#{aid}
+	</select>
+	
+	<select id="selectAll" resultType="cmei.sql.dao.Account">
+		SELECT * FROM nsproduct_inventory
+	</select>
+	
+	<update id="update">
+	    UPDATE nsproduct_inventory 
+	    SET balance=#{balance}
+	    WHERE aid=#{aid} and owner=#{owner}
+	</update>
+	
+	
+</mapper>
