@@ -1,0 +1,5 @@
+12:11:23.200 TRACE logback 44 - trace rolling 2
+12:11:23.212 DEBUG logback 46 - debug rolling 1
+12:11:40.813 TRACE logback 44 - trace rolling 2
+12:11:40.817 DEBUG logback 46 - debug rolling 1
+12:11:40.818 INFO  logback 48 -  infor rolling in logback

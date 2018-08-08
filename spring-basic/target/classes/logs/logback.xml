@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+
+    <!-- ##################appender examples###########################-->
+    <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- encoder 负责两件事，一是把日志信息转换成字节数组，二是把字节数组写入到输出流。
+        目前PatternLayoutEncoder 是唯一有用的且默认的encoder -->
+        <encoder>
+            <pattern>%d %-5p %logger{2} - %msg%n </pattern>
+        </encoder>
+
+        <!--filters:LevelFilter,ThresholdFilter,EvaluatorFilter-->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <appender name="fileAppender" class="ch.qos.logback.core.FileAppender">
+        <file>fileAppender.log</file>
+        <!--true:追加，默认， false:覆盖 -->
+        <append>true</append>
+        <!--false:非安全，true:安全的对多个 fileappender向同一个文件写入时，但效率低-->
+        <prudent>false</prudent>
+        <encoder>
+            <pattern>%d [%thread] %-5level %logger{2} - %msg%n</pattern>
+        </encoder>
+
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+    </appender>
+
+    <appender name="timeRollingFileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+       <file>timeRolling.log</file>
+        <append>true</append>
+
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} %-5p %logger{35} %L - %msg%n </pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>timeRolling.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <!-- 控制保存的归档文件的最大数量。比如：30天 -->
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>1GB</totalSizeCap>
+        </rollingPolicy>
+        <filter class="ch.qos.logback.core.filter.EvaluatorFilter">
+            <evaluator>
+                <matcher>
+                    <Name>matcherName</Name>
+                    <regex>rolling [12]</regex>
+                </matcher>
+                <expression>matcherName.matches(formattedMessage)</expression>
+            </evaluator>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <appender name="sizeRollingFileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>sizeRolling.log</file>
+
+        <encoder>
+            <pattern>%d %-5p %logger{2} %M - %msg%n </pattern>
+        </encoder>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <!-- %i 为文件索引-->
+            <fileNamePattern>sizeRolling.%i.log</fileNamePattern>
+            <!-- 窗口索引最小值-->
+            <minIndex>1</minIndex>
+            <!-- 窗口索引最大值-->
+            <maxIndex>10</maxIndex>
+        </rollingPolicy>
+
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <maxFileSize>5MB</maxFileSize>
+        </triggeringPolicy>
+
+    </appender>
+
+    <!-- 其他类型的 appender SocketAppender、SMTPAppender、DBAppender、SyslogAppender、SiftingAppender -->
+    <!-- ##################appender examples###########################-->
+
+
+
+    <logger name="logback" level="TRACE" additivity="false">
+        <appender-ref ref="timeRollingFileAppender" />
+    </logger>
+
+
+    <root level="debug">
+        <appender-ref ref="stdout" />
+    </root>
+
+
+</configuration>
